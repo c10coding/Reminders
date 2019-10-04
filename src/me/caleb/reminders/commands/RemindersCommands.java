@@ -1,4 +1,8 @@
 package me.caleb.reminders.commands;
+<<<<<<< HEAD
+=======
+//THIS IS A TESt
+>>>>>>> 248917f31753a2c3b633fc2f6c17e0187de8885c
 import java.util.Arrays;
 import java.util.List;
 
