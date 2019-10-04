@@ -1,5 +1,5 @@
 package me.caleb.reminders.commands;
-
+//THIS IS A TESt
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,8 +37,7 @@ public class RemindersCommands implements CommandExecutor{
 				sender.sendMessage(Utils.chat("&7[&bReminder&7]" + "&b You have added a reminder!"));
 				plugin.saveConfig();
 				plugin.reloadConfig();
-			//If they only do /reminders
-				//MAKE SURE YOU DO THE PERMISSIONS CALEB. THIS SHOULD ONLY BE USED BY ADMINS
+
 				return true;
 			}else if(args[0].isEmpty()) {
 				sender.sendMessage(Utils.chat("&7[&bReminder&7]" + "&c You can either do /reminders add or /reminders remove"));
