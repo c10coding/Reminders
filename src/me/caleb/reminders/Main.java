@@ -14,6 +14,7 @@ public class Main extends JavaPlugin{
 	
 	private Main plugin;
 	long time = this.getConfig().getLong("Time");
+	int prev = this.getConfig().getInt("Prev");
 	
 	@Override
 	public void onEnable() {
@@ -27,11 +28,12 @@ public class Main extends JavaPlugin{
             	
             	List<String> list = getConfig().getStringList("Reminders.Strings");
             	
+            	
             	Random rand = new Random();	
                 int randomIndex = rand.nextInt(list.size());
-                if(randomIndex != 0) {
-                	randomIndex -= 1;
-                }
+                //if(randomIndex != 0) {
+                	//randomIndex -= 1;
+                //}
                 String randomElement = list.get(randomIndex);
                 Bukkit.broadcastMessage(Utils.chat("&7[&bReminder&7]" + " &c" + randomElement));
             }

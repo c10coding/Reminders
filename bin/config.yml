@@ -5,6 +5,8 @@ Reminders:
 #Time for Reminders
 Time:  
 #Whenever someone needs help, it does this
+#Previous index that was drawn
+Prev:
 Help:
 - Do &6/reminders add [reminder] &a to add a reminder
 
