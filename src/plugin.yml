@@ -1,0 +1,10 @@
+name: Reminders
+version: 1.0
+main: me.caleb.reminders.Main
+author: Caleb
+
+commands:
+  reminders:
+    description: Reminders command
+    
+       
