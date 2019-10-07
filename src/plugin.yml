@@ -6,5 +6,8 @@ author: Caleb
 commands:
   reminders:
     description: Reminders command
+#Dependency
+depend: [PlugMan]
+
     
        
