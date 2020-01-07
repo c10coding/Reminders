@@ -28,13 +28,12 @@ public class Main extends JavaPlugin{
             @Override
             public void run() {
             	List<String> list = getConfig().getStringList("Reminders.Strings");
-            	
             	Random rand = new Random();	
             	int randomIndex = 0;
             	final String PREFIX = config.getString("Prefix");
             	
             	if(list.size() == 0) {
-            		Bukkit.getConsoleSender().sendMessage(PREFIX + " There are no reminders create. Ignoring...");
+            		Bukkit.getConsoleSender().sendMessage(Utils.chat("&7[&bReminder&7]" + " There are no reminders create. Ignoring..."));
             		return;
             	}else {
             		randomIndex = rand.nextInt(list.size());
@@ -42,23 +41,26 @@ public class Main extends JavaPlugin{
                 
                 int prev = plugin.getConfig().getInt("Prev");    
                 int size = (list.size()-1);
-                 
-                if(randomIndex == prev) {
-                	if(randomIndex == 0) {
-                		randomIndex++;
-                	}else if(randomIndex == size) {
-                		randomIndex--;
-                	}else {
-                		randomIndex++;
-                	}
-                }
                 
-                plugin.getConfig().set("Prev",randomIndex);
+                //Only executes if there's one reminder
+                if(list.size() != 1) {
+                	 if(randomIndex == prev) {
+                     	if(randomIndex == 0) {
+                     		randomIndex++;
+                     	}else if(randomIndex == size) {
+                     		randomIndex--;
+                     	}else {
+                     		randomIndex++;
+                     	}
+                	 }
+                }
+               
+                config.set("Prev",randomIndex);
                 plugin.saveConfig();
                 plugin.reloadConfig();
                 
                 String randomElement = list.get(randomIndex);
-                Bukkit.broadcastMessage(Utils.chat(plugin.getConfig().getString("Prefix") + " &c" + randomElement));
+                Bukkit.broadcastMessage(Utils.chat(PREFIX + " &c" + randomElement));
                 
             }
         }, 0L, time);
