@@ -1,13 +1,18 @@
 name: Reminders
-version: 2.0
+version: 2.1.0
 main: me.caleb.reminders.Main
-author: Caleb
+author: c10coding
 
 commands:
   reminders:
     description: Reminders command
 #Dependency
 depend: [PlugMan]
+
+permission:
+  reminders.use:
+    default: op
+    description: "Allows admin usage of commands"
 
     
        
