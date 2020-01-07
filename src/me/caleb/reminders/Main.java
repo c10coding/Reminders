@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
+
 import me.caleb.reminders.commands.RemindersCommands;
 import me.caleb.reminders.utils.Utils;
 
@@ -14,6 +16,7 @@ public class Main extends JavaPlugin{
 	
 	private Main plugin = this;
 	long time = this.getConfig().getLong("Time");
+	FileConfiguration config = plugin.getConfig();
 	
 	@Override
 	public void onEnable() {
@@ -27,7 +30,16 @@ public class Main extends JavaPlugin{
             	List<String> list = getConfig().getStringList("Reminders.Strings");
             	
             	Random rand = new Random();	
-                int randomIndex = rand.nextInt(list.size());
+            	int randomIndex = 0;
+            	final String PREFIX = config.getString("Prefix");
+            	
+            	if(list.size() == 0) {
+            		Bukkit.getConsoleSender().sendMessage(PREFIX + " There are no reminders create. Ignoring...");
+            		return;
+            	}else {
+            		randomIndex = rand.nextInt(list.size());
+            	}
+                
                 int prev = plugin.getConfig().getInt("Prev");    
                 int size = (list.size()-1);
                  
