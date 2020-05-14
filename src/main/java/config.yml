@@ -1,7 +1,6 @@
 #Reminders
 Prefix: '&7[&bReminder&7]'
 Reminders:
-  Strings:
 #Time for Reminders
 Time: 6000 
 #Whenever someone needs help, it does this
