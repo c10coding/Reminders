@@ -23,14 +23,41 @@ public class ConfigManager {
     public void addReminder(String s){
         List<String> remindersList = getRemindersList();
         remindersList.add(s);
+        saveConfig();
+    }
+
+    public void removeReminder(int numReminder){
+        List<String> remindersList = getRemindersList();
+        remindersList.remove(numReminder-1);
+        config.set("Reminders", remindersList);
+        saveConfig();
+    }
+
+    public void editReminder(String newReminder, int numReminder){
+        List<String> remindersList = getRemindersList();
+        remindersList.set(numReminder-1, newReminder);
+        config.set("Reminders", remindersList);
+        saveConfig();
+    }
+
+    public List<String> getHelpMessages(){
+        return config.getStringList("Help");
+    }
+
+    public boolean sendRandomMessages(){
+        return config.getBoolean("RandomMessages");
+    }
+
+    public void saveConfig(){
         plugin.saveConfig();
     }
 
-    public void removeReminder(int number){
-        List<String> remindersList = getRemindersList();
-        remindersList.remove(number-1);
-        config.set("Reminders", remindersList);
-        plugin.saveConfig();
+    public int getTime(){
+        return config.getInt("Time");
+    }
+
+    public void setTime(int minutes){
+        config.set("Time", minutes);
     }
 
     public boolean isGreaterThanRemindersSize(int index){

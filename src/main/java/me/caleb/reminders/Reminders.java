@@ -6,6 +6,7 @@ import me.c10coding.coreapi.CoreAPI;
 import me.c10coding.coreapi.binder.Binder;
 import me.caleb.reminders.command.Command;
 import me.caleb.reminders.files.ConfigManager;
+import me.caleb.reminders.runnables.ReminderSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Reminders extends JavaPlugin {
@@ -23,7 +24,10 @@ public final class Reminders extends JavaPlugin {
         Injector injector = b.createInjector();
         injector.injectMembers(this);
 
+        int minutes = cm.getTime();
+
         this.getCommand("reminders").setExecutor(this.command);
+        new ReminderSender().runTaskTimer(this, 0L, minutesToTicks(minutes));
     }
 
     @Override
@@ -39,6 +43,8 @@ public final class Reminders extends JavaPlugin {
         return api;
     }
 
-
+    public long minutesToTicks(int minutes){
+        return (long) (minutes * 60) * (20);
+    }
 
 }

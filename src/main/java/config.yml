@@ -2,7 +2,8 @@
 Prefix: '&7[&bReminder&7]'
 Reminders:
 #Time for Reminders
-Time: 6000 
+Time: 6000
+RandomMessages: false
 #Whenever someone needs help, it does this
 #Previous index that was drawn
 Prev:
