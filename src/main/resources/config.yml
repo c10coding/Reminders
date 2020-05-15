@@ -1,0 +1,21 @@
+#Reminders
+Prefix: '&7[&bReminder&7]'
+Reminders:
+#Time for Reminders
+Time: 3
+RandomMessages: false
+#Whenever someone needs help, it does this
+#Previous index that was drawn
+CurrentIndex: 0
+Help:
+-  Do &6/reminders add <Reminder> &a to add a reminder
+
+-  Do &6/reminders remove <#> &a to remove a reminder
+
+-  Do &6/reminders edit <#> <New reminder> &a to edit a reminder
+
+-  Do &6/reminders list &a to list all the reminders
+
+-  Do &6/reminders settime <# of minutes> &a to set the interval between each reminder (&cMake sure you restart your server or reload the plugin&a)
+  
+  

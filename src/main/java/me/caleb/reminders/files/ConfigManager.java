@@ -1,19 +1,26 @@
 package me.caleb.reminders.files;
 
-import com.google.inject.Inject;
 import me.caleb.reminders.Reminders;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 public class ConfigManager {
 
-    @Inject
     private Reminders plugin;
-    private FileConfiguration config = plugin.getConfig();
+    private File configFile;
+    private FileConfiguration config;
 
-    public void validateConfig(Reminders plugin){
+    public ConfigManager(Reminders plugin){
+        this.plugin = plugin;
+        configFile = new File(plugin.getDataFolder(), "config.yml");
+        config = YamlConfiguration.loadConfiguration(configFile);
+    }
+
+    public void validateConfig(){
         File f = new File(plugin.getDataFolder(), "config.yml");
         if(!f.exists()){
             plugin.saveResource("config.yml", false);
@@ -23,6 +30,7 @@ public class ConfigManager {
     public void addReminder(String s){
         List<String> remindersList = getRemindersList();
         remindersList.add(s);
+        config.set("Reminders", remindersList);
         saveConfig();
     }
 
@@ -48,16 +56,39 @@ public class ConfigManager {
         return config.getBoolean("RandomMessages");
     }
 
-    public void saveConfig(){
-        plugin.saveConfig();
+    public int getCurrentIndex(){
+        return config.getInt("CurrentIndex");
     }
 
-    public int getTime(){
-        return config.getInt("Time");
+    public void increaseIndex(int currentIndex){
+        config.set("CurrentIndex", (currentIndex + 1));
+        saveConfig();
+    }
+
+    public void resetIndex(){
+        config.set("CurrentIndex", 0);
+        saveConfig();
+    }
+
+    public void saveConfig() {
+        try {
+            config.save(configFile);
+        }catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void reloadConfig() {
+        config = YamlConfiguration.loadConfiguration(configFile);
+    }
+
+    public double getTime(){
+        return config.getDouble("Time");
     }
 
     public void setTime(int minutes){
         config.set("Time", minutes);
+        saveConfig();
     }
 
     public boolean isGreaterThanRemindersSize(int index){

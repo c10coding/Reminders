@@ -1,6 +1,5 @@
 package me.caleb.reminders.runnables;
 
-import com.google.inject.Inject;
 import me.caleb.reminders.Reminders;
 import me.caleb.reminders.files.ConfigManager;
 import org.bukkit.Bukkit;
@@ -12,27 +11,48 @@ import java.util.Random;
 
 public class ReminderSender extends BukkitRunnable {
 
-    @Inject private ConfigManager cm;
-    @Inject private Reminders plugin;
+    private ConfigManager cm;
+    private Reminders plugin;
+
+    public ReminderSender(Reminders plugin){
+        this.plugin = plugin;
+        cm = new ConfigManager(plugin);
+    }
 
     @Override
     public void run() {
+
+        cm.reloadConfig();
         List<String> messages = cm.getRemindersList();
-        String msg;
         boolean sendRandomMessages = cm.sendRandomMessages();
-        int currentIndexMessage = 0;
+        String msg;
 
-        if(sendRandomMessages){
-            Random rnd = new Random();
-            int randNum = rnd.nextInt(messages.size()-1);
-            msg = messages.get(randNum);
+        if(!messages.isEmpty()){
+            if(sendRandomMessages){
+                Random rnd = new Random();
+                int randNum = rnd.nextInt(messages.size());
+                msg = messages.get(randNum);
+            }else{
+                int currentIndexMessage = cm.getCurrentIndex();
+                if(messages.size() != 1){
+                    if(currentIndexMessage == messages.size()){
+                        cm.resetIndex();
+                        currentIndexMessage = 0;
+                    }
+                    msg = messages.get(currentIndexMessage);
+                    cm.increaseIndex(currentIndexMessage);
+                }else{
+                    cm.resetIndex();
+                    msg = messages.get(0);
+                }
+
+            }
+            for(Player p : Bukkit.getOnlinePlayers()){
+                plugin.getApi().getChatFactory().sendPlayerMessage(msg, true, p, cm.getPrefix());
+            }
         }else{
-            msg = messages.get(currentIndexMessage);
-            currentIndexMessage++;
+            plugin.getLogger().info("There are no reminders in the config...");
         }
 
-        for(Player p : Bukkit.getOnlinePlayers()){
-            plugin.getApi().getChatFactory().sendPlayerMessage(msg, true, p, cm.getPrefix());
-        }
     }
 }
